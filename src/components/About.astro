@@ -1,13 +1,27 @@
 ---
+import { existsSync } from "node:fs";
+import { fileURLToPath } from "node:url";
 import { site } from "../data/site";
 import SectionTitle from "./ui/SectionTitle.astro";
 import Icon from "./ui/Icon.astro";
 
 const base = import.meta.env.BASE_URL.replace(/\/$/, "");
-// Положите свои фото в public/photos/photo-1.* и photo-2.*
-// Поддерживаются jpg / png / webp / svg
-const photo1 = `${base}/photos/photo-1.svg`;
-const photo2 = `${base}/photos/photo-2.svg`;
+const publicDir = fileURLToPath(new URL("../../public/", import.meta.url));
+
+// Подбираем первое существующее расширение, чтобы фотки можно было
+// просто положить в public/photos/ с любым именем — site сам подхватит.
+function pickPhoto(name: string): string {
+  const exts = ["jpg", "jpeg", "png", "webp", "avif", "svg"];
+  for (const ext of exts) {
+    if (existsSync(`${publicDir}photos/${name}.${ext}`)) {
+      return `${base}/photos/${name}.${ext}`;
+    }
+  }
+  return `${base}/photos/${name}.svg`;
+}
+
+const photo1 = pickPhoto("photo-1");
+const photo2 = pickPhoto("photo-2");
 ---
 
 <section id="about" class="relative py-24 md:py-32">

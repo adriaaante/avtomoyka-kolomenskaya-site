@@ -24,18 +24,42 @@ npm run preview
 
 ### Заменить две фотографии мойки
 
-Положите свои фото в `public/photos/`, перезаписав файлы-заглушки:
+Есть два способа.
 
-- `public/photos/photo-1.svg` → ваше фото (можно `.jpg`, `.png`, `.webp`)
-- `public/photos/photo-2.svg` → ваше фото
+**Способ 1 — скачать с Google Drive автоматически (рекомендуется).**
 
-Если используете другое расширение (например `.jpg`), отредактируйте 2 строки в
-`src/components/About.astro`:
+В файле `scripts/fetch-photos.mjs` уже прописаны ссылки на ваши фотографии в
+Drive. Запустите:
 
-```ts
-const photo1 = `${base}/photos/photo-1.jpg`;
-const photo2 = `${base}/photos/photo-2.jpg`;
+```bash
+npm run fetch:photos
 ```
+
+Скрипт сам:
+
+- вытащит ID файлов из любых форматов ссылок Drive;
+- обойдёт страницу «virus scan warning» для крупных файлов;
+- определит расширение по типу контента (`jpg` / `png` / `webp`);
+- удалит старые версии и положит новые в `public/photos/`.
+
+Если хотите подменить ссылки без правки кода, передайте их через ENV:
+
+```bash
+PHOTO_1_URL="https://drive.google.com/file/d/..." \
+PHOTO_2_URL="https://drive.google.com/file/d/..." \
+npm run fetch:photos
+```
+
+Чтобы фото обновлялись на каждом деплое автоматически, можно добавить
+`npm run fetch:photos` в `.github/workflows/deploy.yml` перед `npm run build` —
+но тогда файлы Drive должны быть **открыты по ссылке** для всех.
+
+**Способ 2 — положить вручную.**
+
+Просто закиньте свои фото в `public/photos/` с именами `photo-1.*` и
+`photo-2.*` (любое расширение из `.jpg`, `.jpeg`, `.png`, `.webp`, `.avif`).
+Компонент `src/components/About.astro` сам найдёт первое подходящее
+расширение — править ничего не нужно.
 
 Рекомендуемые размеры: вертикальные, не меньше 900×1200 пикселей, до 500 КБ.
 
