@@ -1,0 +1,53 @@
+---
+import { site } from "../data/site";
+import Icon from "./ui/Icon.astro";
+---
+
+<section class="relative py-24 md:py-32">
+  <div class="container-x">
+    <div class="relative overflow-hidden rounded-[2.5rem] border border-brass-500/30 bg-gradient-to-br from-ink-800 via-ink-900 to-ink-950 p-10 md:p-16 lg:p-20 fade-in">
+      <!-- decorative blobs -->
+      <div class="pointer-events-none absolute -left-32 -top-32 h-96 w-96 rounded-full bg-brass-500/20 blur-[120px]"></div>
+      <div class="pointer-events-none absolute -bottom-40 -right-20 h-[28rem] w-[28rem] rounded-full bg-brass-700/30 blur-[120px]"></div>
+
+      <div class="relative flex flex-col items-center text-center">
+        <span class="eyebrow">Приезжайте</span>
+        <h2 class="h-display mt-6 max-w-3xl text-4xl leading-[1.05] text-white md:text-6xl text-balance">
+          Машина заслуживает <span class="shine-text">15 минут</span> заботы. <br class="hidden md:block" />
+          Подарите их сегодня.
+        </h2>
+        <p class="mt-5 max-w-xl text-white/70 md:text-lg">
+          Без записи, ежедневно с 09:00 до 22:00. Найдём окно даже в час пик —
+          просто позвоните.
+        </p>
+
+        <a
+          href={site.phone.href}
+          class="mt-10 inline-flex flex-col items-center gap-2 rounded-3xl bg-brass-400 px-10 py-6 text-ink-950 transition-all hover:bg-brass-300 hover:-translate-y-1 hover:shadow-glow"
+        >
+          <span class="text-xs font-bold uppercase tracking-[0.3em]">Позвонить сейчас</span>
+          <span class="font-display text-3xl font-extrabold md:text-5xl">{site.phone.display}</span>
+        </a>
+
+        <div class="mt-8 flex flex-wrap items-center justify-center gap-3">
+          <a href={site.whatsapp} target="_blank" rel="noopener" class="btn-ghost">
+            <Icon name="message-circle" class="h-4 w-4" />
+            WhatsApp
+          </a>
+          <a href={site.telegram} target="_blank" rel="noopener" class="btn-ghost">
+            <Icon name="send" class="h-4 w-4" />
+            Telegram
+          </a>
+          <a href={site.yandexCard} target="_blank" rel="noopener" class="btn-ghost">
+            <Icon name="navigation" class="h-4 w-4" />
+            Маршрут
+          </a>
+        </div>
+
+        <div class="mt-8 text-sm text-white/55">
+          {site.address.line1} · {site.address.metro}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

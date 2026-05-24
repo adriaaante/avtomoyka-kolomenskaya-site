@@ -1,0 +1,23 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#07090c"/>
+      <stop offset="1" stop-color="#1a2230"/>
+    </linearGradient>
+    <radialGradient id="spot" cx="80%" cy="20%" r="60%">
+      <stop offset="0" stop-color="#caa436" stop-opacity="0.4"/>
+      <stop offset="1" stop-color="#caa436" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#spot)"/>
+  <text x="80" y="200" font-family="Manrope, sans-serif" font-size="28" font-weight="600" fill="#caa436" letter-spacing="0.3em">АВТОМОЙКА</text>
+  <text x="80" y="340" font-family="Manrope, sans-serif" font-size="92" font-weight="800" fill="#fff">Коломенская</text>
+  <text x="80" y="410" font-family="Manrope, sans-serif" font-size="32" fill="#e9eef7" opacity="0.8">Ручная мойка · Химчистка · Полировка</text>
+  <text x="80" y="540" font-family="Manrope, sans-serif" font-size="26" fill="#caa436">Нагатинская, 1б · +7 (968) 878-03-03</text>
+  <g transform="translate(950,420)" fill="#caa436">
+    <path d="M0 80 Q0 30 60 30 Q120 30 120 80 L120 100 L0 100 Z"/>
+    <circle cx="20" cy="100" r="12" fill="#0b0f15"/>
+    <circle cx="100" cy="100" r="12" fill="#0b0f15"/>
+  </g>
+</svg>

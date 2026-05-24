@@ -1,0 +1,99 @@
+---
+import { getCollection } from "astro:content";
+import SectionTitle from "./ui/SectionTitle.astro";
+import Icon from "./ui/Icon.astro";
+import { site } from "../data/site";
+
+const services = (await getCollection("services")).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+
+const categoryLabels: Record<string, string> = {
+  complex: "Комплекс",
+  exterior: "Кузов",
+  interior: "Салон",
+  polish: "Полировка",
+  detailing: "Детейлинг",
+  extra: "Дополнительно",
+};
+
+const formatPrice = (n: number) =>
+  new Intl.NumberFormat("ru-RU").format(n) + " ₽";
+---
+
+<section id="services" class="relative py-24 md:py-32">
+  <!-- subtle gradient backdrop -->
+  <div class="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-ink-900/0 via-ink-900/40 to-ink-950"></div>
+
+  <div class="container-x">
+    <div class="flex flex-wrap items-end justify-between gap-6">
+      <SectionTitle
+        eyebrow="Услуги и цены"
+        title="От экспресс-мойки до керамики"
+        sub="Открытые цены «от», точный счёт согласуем по телефону под ваш автомобиль и состояние."
+      />
+      <a href={site.phone.href} class="btn-ghost shrink-0">
+        <Icon name="phone" class="h-4 w-4 text-brass-300" />
+        Уточнить цену
+      </a>
+    </div>
+
+    <div
+      data-stagger
+      class="mt-14 grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3"
+    >
+      {services.map((s) => (
+        <article
+          data-stagger-item
+          class={`card card-hover group flex h-full flex-col ${s.data.featured ? "ring-1 ring-brass-500/40" : ""}`}
+        >
+          {s.data.featured && (
+            <span class="absolute right-5 top-5 inline-flex items-center gap-1 rounded-full bg-brass-400 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-widest text-ink-950">
+              <Icon name="star" class="h-3 w-3" />
+              Хит
+            </span>
+          )}
+          <div class="mb-4 flex items-center gap-3">
+            <span class="grid h-11 w-11 place-items-center rounded-xl bg-brass-500/10 text-brass-300 ring-1 ring-brass-500/20">
+              <Icon name={s.data.icon} class="h-5 w-5" />
+            </span>
+            <span class="text-[10px] font-semibold uppercase tracking-[0.25em] text-white/40">
+              {categoryLabels[s.data.category]}
+            </span>
+          </div>
+          <h3 class="h-display text-xl text-white">{s.data.title}</h3>
+          {s.body && (
+            <p class="mt-2 text-sm leading-relaxed text-white/60">{s.body.trim()}</p>
+          )}
+          <ul class="mt-4 space-y-2 text-sm text-white/75">
+            {s.data.highlights.map((h) => (
+              <li class="flex items-start gap-2">
+                <Icon name="badge-check" class="mt-0.5 h-4 w-4 shrink-0 text-brass-300" />
+                <span>{h}</span>
+              </li>
+            ))}
+          </ul>
+          <div class="mt-6 flex items-end justify-between gap-4 border-t border-white/5 pt-5">
+            <div>
+              <div class="text-[10px] uppercase tracking-[0.25em] text-white/40">от</div>
+              <div class="h-display text-2xl text-white">{formatPrice(s.data.priceFrom)}</div>
+              <div class="mt-1 text-xs text-white/50">{s.data.duration}</div>
+            </div>
+            <a
+              href={site.phone.href}
+              class="inline-flex items-center gap-2 rounded-full border border-white/10 px-4 py-2 text-xs font-semibold text-white/85 transition-colors hover:border-brass-400 hover:text-brass-200"
+              aria-label={`Записаться: ${s.data.title}`}
+            >
+              Записаться
+              <Icon name="arrow-right" class="h-3.5 w-3.5" />
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+
+    <p class="mt-10 text-center text-xs text-white/40">
+      Цены ориентировочные. Финальная стоимость зависит от размера авто и состояния. Не оферта.
+    </p>
+  </div>
+</section>

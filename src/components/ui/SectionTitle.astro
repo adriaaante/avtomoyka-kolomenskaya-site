@@ -1,0 +1,18 @@
+---
+const { eyebrow, title, sub, align = "left" } = Astro.props as {
+  eyebrow?: string;
+  title: string;
+  sub?: string;
+  align?: "left" | "center";
+};
+const wrap = align === "center" ? "items-center text-center" : "items-start";
+---
+<header class={`flex flex-col gap-4 ${wrap} fade-in`}>
+  {eyebrow && <span class="eyebrow">{eyebrow}</span>}
+  <h2 class="h-display text-4xl leading-[1.05] md:text-5xl lg:text-6xl text-balance">
+    {title}
+  </h2>
+  {sub && (
+    <p class="max-w-2xl text-base text-white/70 md:text-lg text-balance">{sub}</p>
+  )}
+</header>

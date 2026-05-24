@@ -1,0 +1,72 @@
+---
+import { site } from "../data/site";
+import Icon from "./ui/Icon.astro";
+const year = new Date().getFullYear();
+---
+
+<footer class="relative border-t border-white/5 bg-ink-950 py-14">
+  <div class="container-x">
+    <div class="grid grid-cols-1 gap-10 md:grid-cols-3">
+      <div>
+        <a href="#top" class="flex items-center gap-3">
+          <span class="grid h-10 w-10 place-items-center rounded-xl bg-ink-900 ring-1 ring-brass-500/40">
+            <Icon name="droplets" class="h-5 w-5 text-brass-300" />
+          </span>
+          <span class="leading-tight">
+            <span class="block font-display font-bold text-white">{site.shortName}</span>
+            <span class="block text-[10px] uppercase tracking-[0.3em] text-brass-300">с заботой о вашем авто</span>
+          </span>
+        </a>
+        <p class="mt-5 text-sm text-white/55 max-w-xs">
+          Ручная мойка, химчистка, полировка и детейлинг у м. Коломенская.
+        </p>
+      </div>
+
+      <div>
+        <div class="text-[10px] uppercase tracking-[0.3em] text-white/40">Контакты</div>
+        <ul class="mt-4 space-y-2 text-sm">
+          <li>
+            <a href={site.phone.href} class="text-white hover:text-brass-200">
+              {site.phone.display}
+            </a>
+          </li>
+          <li class="text-white/65">{site.address.line1}, {site.address.line2}</li>
+          <li class="text-white/65">{site.address.city}</li>
+          <li class="text-white/65">{site.hoursShort}</li>
+        </ul>
+        <div class="mt-4 flex gap-2">
+          <a href={site.whatsapp} target="_blank" rel="noopener" aria-label="WhatsApp" class="grid h-9 w-9 place-items-center rounded-full border border-white/10 text-white/70 transition-colors hover:border-brass-400 hover:text-brass-200">
+            <Icon name="message-circle" class="h-4 w-4" />
+          </a>
+          <a href={site.telegram} target="_blank" rel="noopener" aria-label="Telegram" class="grid h-9 w-9 place-items-center rounded-full border border-white/10 text-white/70 transition-colors hover:border-brass-400 hover:text-brass-200">
+            <Icon name="send" class="h-4 w-4" />
+          </a>
+          <a href={site.yandexCard} target="_blank" rel="noopener" aria-label="Яндекс.Карты" class="grid h-9 w-9 place-items-center rounded-full border border-white/10 text-white/70 transition-colors hover:border-brass-400 hover:text-brass-200">
+            <Icon name="map-pin" class="h-4 w-4" />
+          </a>
+        </div>
+      </div>
+
+      <div>
+        <div class="text-[10px] uppercase tracking-[0.3em] text-white/40">Меню</div>
+        <ul class="mt-4 grid grid-cols-2 gap-y-2 text-sm">
+          <li><a href="#advantages" class="text-white/70 hover:text-brass-200">Преимущества</a></li>
+          <li><a href="#services" class="text-white/70 hover:text-brass-200">Услуги</a></li>
+          <li><a href="#process" class="text-white/70 hover:text-brass-200">Процесс</a></li>
+          <li><a href="#gallery" class="text-white/70 hover:text-brass-200">Работы</a></li>
+          <li><a href="#reviews" class="text-white/70 hover:text-brass-200">Отзывы</a></li>
+          <li><a href="#map" class="text-white/70 hover:text-brass-200">Карта</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <hr class="my-10 border-white/5" />
+
+    <div class="flex flex-col items-start justify-between gap-4 text-xs text-white/40 md:flex-row md:items-center">
+      <div>© {year} {site.shortName}. Все права защищены.</div>
+      <div class="max-w-xl text-white/40">
+        Сайт носит информационный характер и не собирает персональные данные пользователей. Цены не являются публичной офертой.
+      </div>
+    </div>
+  </div>
+</footer>

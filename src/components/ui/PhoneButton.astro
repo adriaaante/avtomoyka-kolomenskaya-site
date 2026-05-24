@@ -1,0 +1,13 @@
+---
+import { site } from "../../data/site";
+import Icon from "./Icon.astro";
+const { variant = "primary", label = "Позвонить" } = Astro.props as {
+  variant?: "primary" | "ghost";
+  label?: string;
+};
+const cls = variant === "ghost" ? "btn-ghost" : "btn-primary";
+---
+<a href={site.phone.href} class={cls} aria-label={`Позвонить ${site.phone.display}`}>
+  <Icon name="phone" class="h-4 w-4" />
+  <span>{label}</span>
+</a>

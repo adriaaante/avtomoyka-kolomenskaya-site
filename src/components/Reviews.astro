@@ -1,0 +1,57 @@
+---
+import { getCollection } from "astro:content";
+import { site } from "../data/site";
+import SectionTitle from "./ui/SectionTitle.astro";
+import Icon from "./ui/Icon.astro";
+
+const reviews = (await getCollection("reviews")).sort(
+  (a, b) => a.data.order - b.data.order,
+);
+---
+
+<section id="reviews" class="relative py-24 md:py-32">
+  <div class="container-x">
+    <div class="flex flex-wrap items-end justify-between gap-6">
+      <SectionTitle
+        eyebrow="Отзывы"
+        title="Что говорят клиенты"
+        sub="Реальные впечатления гостей нашей мойки."
+      />
+      <a
+        href={site.yandexCard}
+        target="_blank"
+        rel="noopener"
+        class="btn-ghost shrink-0"
+      >
+        <Icon name="star" class="h-4 w-4 text-brass-300" />
+        Все отзывы на Яндексе
+      </a>
+    </div>
+
+    <div data-stagger class="mt-12 grid grid-cols-1 gap-5 md:grid-cols-2 lg:grid-cols-2">
+      {reviews.map((r) => (
+        <article data-stagger-item class="card card-hover flex h-full flex-col">
+          <div class="flex items-center gap-1 text-brass-300">
+            {Array.from({ length: r.data.rating }).map(() => (
+              <Icon name="star" class="h-4 w-4" />
+            ))}
+          </div>
+          <p class="mt-4 flex-1 text-base leading-relaxed text-white/85">
+            «{r.body.trim()}»
+          </p>
+          <footer class="mt-6 flex items-center justify-between border-t border-white/5 pt-4">
+            <div>
+              <div class="font-semibold text-white">{r.data.author}</div>
+              {r.data.car && (
+                <div class="text-xs text-white/50">{r.data.car}</div>
+              )}
+            </div>
+            <time class="text-xs text-white/40" datetime={r.data.date.toISOString()}>
+              {r.data.date.toLocaleDateString("ru-RU", { year: "numeric", month: "long" })}
+            </time>
+          </footer>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

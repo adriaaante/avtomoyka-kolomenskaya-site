@@ -1,0 +1,67 @@
+---
+import { site } from "../data/site";
+import Icon from "./ui/Icon.astro";
+
+const nav = [
+  { href: "#advantages", label: "Преимущества" },
+  { href: "#services", label: "Услуги" },
+  { href: "#process", label: "Процесс" },
+  { href: "#gallery", label: "Работы" },
+  { href: "#map", label: "Контакты" },
+];
+---
+
+<header
+  data-header
+  class="fixed inset-x-0 top-0 z-40 border-b border-transparent transition-all duration-500"
+>
+  <div class="container-x flex h-16 items-center justify-between gap-6 md:h-20">
+    <a href="#top" class="flex items-center gap-3 group">
+      <span class="grid h-10 w-10 place-items-center rounded-xl bg-ink-900/80 ring-1 ring-brass-500/40 transition-all group-hover:ring-brass-300">
+        <Icon name="droplets" class="h-5 w-5 text-brass-300" />
+      </span>
+      <span class="leading-tight">
+        <span class="block font-display text-sm font-bold tracking-wide text-white">Автомойка</span>
+        <span class="block text-[10px] uppercase tracking-[0.3em] text-brass-300">Коломенская</span>
+      </span>
+    </a>
+
+    <nav aria-label="Главное меню" class="hidden lg:block">
+      <ul class="flex items-center gap-1">
+        {nav.map((item) => (
+          <li>
+            <a
+              href={item.href}
+              class="rounded-full px-4 py-2 text-sm font-medium text-white/80 transition-colors hover:bg-white/5 hover:text-white"
+            >
+              {item.label}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="flex items-center gap-3">
+      <a href={site.phone.href} class="hidden md:inline-flex items-center gap-2 text-sm font-semibold text-white hover:text-brass-300">
+        <Icon name="phone" class="h-4 w-4 text-brass-300" />
+        {site.phone.display}
+      </a>
+      <a href={site.phone.href} class="btn-primary !px-4 !py-2 text-xs md:text-sm">
+        <Icon name="phone" class="h-4 w-4 md:hidden" />
+        <span class="hidden md:inline">Позвонить</span>
+        <span class="md:hidden">Звонок</span>
+      </a>
+    </div>
+  </div>
+</header>
+
+<style is:global>
+  [data-header] {
+    background: linear-gradient(to bottom, rgba(7, 9, 12, 0.7), rgba(7, 9, 12, 0));
+  }
+  [data-header].is-scrolled {
+    background: rgba(7, 9, 12, 0.85);
+    backdrop-filter: blur(14px);
+    border-bottom-color: rgba(255, 255, 255, 0.06);
+  }
+</style>

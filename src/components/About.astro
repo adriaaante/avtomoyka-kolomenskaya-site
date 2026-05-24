@@ -1,0 +1,61 @@
+---
+import { site } from "../data/site";
+import SectionTitle from "./ui/SectionTitle.astro";
+import Icon from "./ui/Icon.astro";
+---
+
+<section class="relative py-24 md:py-32">
+  <div class="container-x grid grid-cols-1 gap-12 lg:grid-cols-12 lg:gap-16">
+    <div class="lg:col-span-7">
+      <SectionTitle
+        eyebrow="О мойке"
+        title="Маленькая мойка с большими амбициями"
+        sub="Мы открылись на Нагатинской как «мойка для соседей» — и быстро стали тем местом, куда привозят машины с других районов Москвы."
+      />
+      <div class="mt-8 space-y-4 text-base text-white/75 leading-relaxed">
+        <p>
+          Не пытаемся обмыть весь город. Зато про каждый кузов, который заехал в
+          наш бокс, мы знаем — пройдёт ровно тот же путь: предмойка, пена,
+          ручная промывка с двумя вёдрами, аккуратная сушка плюшевой
+          микрофиброй и финиш на кварцевом воске.
+        </p>
+        <p>
+          Не торопимся. Лучше потратим лишние 10 минут на проёмы и пороги, чем
+          вернёмся через час с «недоделкой». У нас одна задача — чтобы вы сели в
+          машину и подумали: «Чёрт, как же приятно».
+        </p>
+      </div>
+    </div>
+
+    <div class="lg:col-span-5">
+      <div data-stagger class="grid grid-cols-2 gap-4">
+        {site.stats.map((s) => (
+          <div
+            data-stagger-item
+            class="card relative overflow-hidden"
+          >
+            <div class="h-display flex items-baseline gap-1 text-4xl text-white md:text-5xl">
+              <span data-counter={String(s.value)}>0</span>
+              <span class="text-brass-300">{s.suffix}</span>
+            </div>
+            <div class="mt-2 text-xs uppercase tracking-[0.2em] text-white/50">
+              {s.label}
+            </div>
+            <Icon name="sparkles" class="absolute -right-2 -top-2 h-16 w-16 text-brass-500/10" />
+          </div>
+        ))}
+      </div>
+
+      <div class="mt-6 rounded-2xl border border-brass-500/30 bg-gradient-to-br from-brass-500/10 to-transparent p-6">
+        <div class="flex items-center gap-3">
+          <Icon name="leaf" class="h-6 w-6 text-brass-300" />
+          <h3 class="h-display text-lg text-white">Бережно к экологии</h3>
+        </div>
+        <p class="mt-3 text-sm text-white/70 leading-relaxed">
+          Используем биоразлагаемую химию, замкнутую систему оборотного
+          водоснабжения и LED-освещение. Меньше воды — больше пользы.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

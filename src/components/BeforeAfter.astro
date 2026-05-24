@@ -1,0 +1,77 @@
+---
+import SectionTitle from "./ui/SectionTitle.astro";
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+
+const pairs = [
+  {
+    title: "Восстановительная полировка ЛКП",
+    before: `${base}/gallery/before-after/sample-before.svg`,
+    after: `${base}/gallery/before-after/sample-after.svg`,
+  },
+];
+---
+
+<section class="relative py-24 md:py-32">
+  <div class="container-x">
+    <SectionTitle
+      eyebrow="До и после"
+      title="Перетащите ползунок — увидите разницу"
+      sub="Лучшее доказательство — сам результат. Реальные работы наших мастеров."
+    />
+
+    <div class="mt-12 space-y-12">
+      {pairs.map((p) => (
+        <figure class="fade-in">
+          <div
+            data-ba
+            class="relative aspect-[16/10] w-full select-none overflow-hidden rounded-3xl border border-ink-700 shadow-card"
+          >
+            <img
+              src={p.after}
+              alt={`${p.title} — после`}
+              class="absolute inset-0 h-full w-full object-cover"
+              loading="lazy"
+            />
+            <div
+              data-ba-top
+              class="absolute inset-0"
+              style="clip-path: inset(0 50% 0 0)"
+            >
+              <img
+                src={p.before}
+                alt={`${p.title} — до`}
+                class="h-full w-full object-cover"
+                loading="lazy"
+              />
+            </div>
+            <!-- handle -->
+            <div
+              data-ba-handle
+              class="pointer-events-none absolute inset-y-0 left-1/2 z-20 w-px -translate-x-px bg-brass-300/90"
+            >
+              <span class="absolute left-1/2 top-1/2 grid h-12 w-12 -translate-x-1/2 -translate-y-1/2 place-items-center rounded-full bg-brass-400 text-ink-950 shadow-glow">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                  <polyline points="15 18 9 12 15 6"/>
+                  <polyline points="9 18 15 12 9 6" transform="translate(8 0)"/>
+                </svg>
+              </span>
+            </div>
+            <input
+              data-ba-slider
+              type="range"
+              min="0"
+              max="100"
+              value="50"
+              class="absolute inset-0 z-30 h-full w-full cursor-ew-resize opacity-0"
+              aria-label="Сравнение до и после"
+            />
+            <span class="absolute left-4 top-4 rounded-full bg-ink-950/80 px-3 py-1 text-xs font-semibold tracking-wider text-white">ДО</span>
+            <span class="absolute right-4 top-4 rounded-full bg-brass-400 px-3 py-1 text-xs font-semibold tracking-wider text-ink-950">ПОСЛЕ</span>
+          </div>
+          <figcaption class="mt-4 text-center text-sm text-white/65">{p.title}</figcaption>
+        </figure>
+      ))}
+    </div>
+  </div>
+</section>

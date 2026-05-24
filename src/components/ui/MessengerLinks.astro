@@ -1,0 +1,27 @@
+---
+import { site } from "../../data/site";
+import Icon from "./Icon.astro";
+const { compact = false } = Astro.props as { compact?: boolean };
+---
+<div class={`flex items-center gap-3 ${compact ? "" : "flex-wrap"}`}>
+  <a
+    href={site.whatsapp}
+    target="_blank"
+    rel="noopener"
+    class="btn-ghost"
+    aria-label="Написать в WhatsApp"
+  >
+    <Icon name="message-circle" class="h-4 w-4" />
+    <span>WhatsApp</span>
+  </a>
+  <a
+    href={site.telegram}
+    target="_blank"
+    rel="noopener"
+    class="btn-ghost"
+    aria-label="Написать в Telegram"
+  >
+    <Icon name="send" class="h-4 w-4" />
+    <span>Telegram</span>
+  </a>
+</div>

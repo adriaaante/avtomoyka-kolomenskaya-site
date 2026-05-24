@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1000" role="img" aria-label="Фото бокса автомойки с автомобилем">
+  <defs>
+    <linearGradient id="bg2" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#07090c"/>
+      <stop offset="1" stop-color="#11161f"/>
+    </linearGradient>
+    <radialGradient id="spot2" cx="50%" cy="40%" r="60%">
+      <stop offset="0" stop-color="#ffffff" stop-opacity="0.12"/>
+      <stop offset="1" stop-color="#ffffff" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1600" height="1000" fill="url(#bg2)"/>
+  <rect width="1600" height="1000" fill="url(#spot2)"/>
+  <!-- ceiling LED strips -->
+  <g opacity="0.7">
+    <rect x="100" y="60" width="1400" height="6" fill="#caa436"/>
+    <rect x="200" y="120" width="1200" height="4" fill="#caa436" opacity="0.6"/>
+  </g>
+  <!-- foamy circles -->
+  <g fill="#fff" opacity="0.08">
+    <circle cx="160" cy="320" r="40"/>
+    <circle cx="240" cy="400" r="60"/>
+    <circle cx="1320" cy="280" r="50"/>
+    <circle cx="1450" cy="380" r="35"/>
+    <circle cx="220" cy="700" r="80"/>
+    <circle cx="1380" cy="720" r="70"/>
+  </g>
+  <!-- car back view silhouette -->
+  <g transform="translate(450,380)">
+    <rect x="0" y="120" width="700" height="240" rx="40" fill="#0b0f15"/>
+    <rect x="60" y="80" width="580" height="120" rx="30" fill="#11161f"/>
+    <rect x="80" y="100" width="540" height="80" rx="20" fill="#1a2230"/>
+    <rect x="40" y="180" width="120" height="40" rx="6" fill="#caa436" opacity="0.85"/>
+    <rect x="540" y="180" width="120" height="40" rx="6" fill="#caa436" opacity="0.85"/>
+    <circle cx="120" cy="380" r="50" fill="#0b0f15" stroke="#2a3445" stroke-width="4"/>
+    <circle cx="580" cy="380" r="50" fill="#0b0f15" stroke="#2a3445" stroke-width="4"/>
+  </g>
+  <!-- floor wet reflection -->
+  <rect y="780" width="1600" height="220" fill="#0b0f15"/>
+  <rect y="780" width="1600" height="220" fill="url(#spot2)"/>
+  <g fill="#caa436" opacity="0.5">
+    <text x="60" y="920" font-family="Manrope, sans-serif" font-size="28" font-weight="700" letter-spacing="0.2em">АВТОМОЙКА КОЛОМЕНСКАЯ</text>
+    <text x="60" y="956" font-family="Manrope, sans-serif" font-size="18" letter-spacing="0.25em">DETAILING BOX · NAGATINSKAYA 1B</text>
+  </g>
+</svg>

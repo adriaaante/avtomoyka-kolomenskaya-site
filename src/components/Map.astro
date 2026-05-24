@@ -1,0 +1,103 @@
+---
+import { site } from "../data/site";
+import SectionTitle from "./ui/SectionTitle.astro";
+import Icon from "./ui/Icon.astro";
+
+const today = new Date().getDay(); // 0=вс, 1=пн ...
+const todayIndex = today === 0 ? 6 : today - 1;
+---
+
+<section id="map" class="relative py-24 md:py-32">
+  <div class="container-x">
+    <SectionTitle
+      eyebrow="Как нас найти"
+      title="м. Коломенская, 6 минут пешком"
+      sub="Заезд с Нагатинской улицы, рядом — большая бесплатная парковка."
+    />
+
+    <div class="mt-12 grid grid-cols-1 gap-6 lg:grid-cols-12">
+      <div class="lg:col-span-7 fade-in">
+        <div class="overflow-hidden rounded-3xl border border-ink-700 shadow-card">
+          <iframe
+            src={site.yandexMapEmbed}
+            class="block h-[420px] w-full md:h-[540px]"
+            frameborder="0"
+            loading="lazy"
+            allowfullscreen
+            title={`Карта проезда: ${site.name}`}
+          ></iframe>
+        </div>
+      </div>
+
+      <div class="space-y-5 lg:col-span-5">
+        <article class="card fade-in">
+          <div class="flex items-center gap-3">
+            <Icon name="map-pin" class="h-5 w-5 text-brass-300" />
+            <h3 class="h-display text-lg text-white">Адрес</h3>
+          </div>
+          <p class="mt-3 text-white/85">
+            {site.address.line1}<br />
+            {site.address.line2} · {site.address.city}
+          </p>
+          <p class="mt-1 text-sm text-white/55">{site.address.metro}</p>
+          <a
+            href={site.yandexCard}
+            target="_blank"
+            rel="noopener"
+            class="mt-4 inline-flex items-center gap-2 text-sm font-semibold text-brass-300 hover:text-brass-200"
+          >
+            <Icon name="navigation" class="h-4 w-4" />
+            Построить маршрут
+          </a>
+        </article>
+
+        <article class="card fade-in">
+          <div class="flex items-center gap-3">
+            <Icon name="phone" class="h-5 w-5 text-brass-300" />
+            <h3 class="h-display text-lg text-white">Контакты</h3>
+          </div>
+          <a
+            href={site.phone.href}
+            class="mt-3 block font-display text-2xl font-bold text-white hover:text-brass-200"
+          >
+            {site.phone.display}
+          </a>
+          <div class="mt-4 flex flex-wrap gap-2">
+            <a href={site.whatsapp} target="_blank" rel="noopener" class="btn-ghost !px-4 !py-2 text-xs">
+              <Icon name="message-circle" class="h-3.5 w-3.5" />
+              WhatsApp
+            </a>
+            <a href={site.telegram} target="_blank" rel="noopener" class="btn-ghost !px-4 !py-2 text-xs">
+              <Icon name="send" class="h-3.5 w-3.5" />
+              Telegram
+            </a>
+          </div>
+        </article>
+
+        <article class="card fade-in">
+          <div class="flex items-center gap-3">
+            <Icon name="clock" class="h-5 w-5 text-brass-300" />
+            <h3 class="h-display text-lg text-white">Часы работы</h3>
+          </div>
+          <ul class="mt-3 divide-y divide-white/5">
+            {site.hours.map((h, i) => (
+              <li
+                class={`flex items-center justify-between py-2 text-sm ${i === todayIndex ? "text-white" : "text-white/65"}`}
+              >
+                <span class="flex items-center gap-2">
+                  {h.day}
+                  {i === todayIndex && (
+                    <span class="rounded-full bg-brass-400 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-ink-950">
+                      сегодня
+                    </span>
+                  )}
+                </span>
+                <span class="tabular-nums">{h.value}</span>
+              </li>
+            ))}
+          </ul>
+        </article>
+      </div>
+    </div>
+  </div>
+</section>
