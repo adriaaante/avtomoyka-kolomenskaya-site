@@ -2,8 +2,6 @@
 title: "Керамическое покрытие"
 category: "detailing"
 icon: "shield-check"
-priceFrom: 35000
-duration: "от 1 дня"
 order: 50
 featured: true
 highlights:

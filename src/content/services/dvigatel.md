@@ -2,8 +2,6 @@
 title: "Мойка двигателя"
 category: "extra"
 icon: "cog"
-priceFrom: 1500
-duration: "30–40 мин"
 order: 60
 highlights:
   - "Защита электроники"

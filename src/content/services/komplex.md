@@ -2,8 +2,6 @@
 title: "Комплексная мойка"
 category: "complex"
 icon: "sparkles"
-priceFrom: 1200
-duration: "45–60 мин"
 order: 10
 featured: true
 highlights:

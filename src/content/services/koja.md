@@ -2,8 +2,6 @@
 title: "Уход за кожей салона"
 category: "interior"
 icon: "hand"
-priceFrom: 4500
-duration: "1.5–2 часа"
 order: 35
 highlights:
   - "Очистка пенным составом"

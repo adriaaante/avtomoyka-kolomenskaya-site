@@ -2,8 +2,6 @@
 title: "Экспресс-мойка кузова"
 category: "exterior"
 icon: "zap"
-priceFrom: 600
-duration: "15–20 мин"
 order: 20
 highlights:
   - "Активная пена"

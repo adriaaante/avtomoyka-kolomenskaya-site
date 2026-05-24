@@ -2,8 +2,6 @@
 title: "Полировка оптики"
 category: "extra"
 icon: "lightbulb"
-priceFrom: 3500
-duration: "1–2 часа"
 order: 70
 highlights:
   - "Снятие желтизны"

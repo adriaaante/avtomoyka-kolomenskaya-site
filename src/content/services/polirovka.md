@@ -2,8 +2,6 @@
 title: "Полировка кузова"
 category: "polish"
 icon: "wand-sparkles"
-priceFrom: 18000
-duration: "от 8 часов"
 order: 40
 highlights:
   - "Замер ЛКП толщиномером"

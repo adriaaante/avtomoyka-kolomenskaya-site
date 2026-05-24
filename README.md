@@ -1,10 +1,11 @@
 # Автомойка Коломенская — сайт-визитка
 
-Премиум сайт-визитка автомойки на Нагатинской ул., 1б, стр. 2 (м. Коломенская).
+Простой и быстрый сайт-визитка автомойки на Нагатинской ул., 1б, стр. 2 (м. Коломенская).
 Сделано на **Astro 5 + Tailwind CSS + GSAP**, деплой — на **GitHub Pages**.
 
 - Чистый статический сайт, не собирает персональные данные → **регистрация в Роскомнадзоре не нужна**.
 - Все обращения — звонком или в мессенджеры (никаких форм с именем/телефоном).
+- Без цен на сайте: клиент видит услуги, точную стоимость уточняет по телефону.
 - Анимации GSAP с уважением к `prefers-reduced-motion`.
 - Структурированные данные `schema.org/AutoWash` для богатых сниппетов в Яндекс / Google.
 
@@ -12,56 +13,47 @@
 
 ```bash
 npm install
-npm run dev    # http://localhost:4321
+npm run dev    # http://localhost:4321/avtomoyka-kolomenskaya-site/
 npm run build  # сборка в dist/
 npm run preview
 ```
 
 ## Как обновить контент
 
-Весь контент лежит в человекочитаемых файлах. Не нужно знать программирование.
+Весь контент — в человекочитаемых файлах. Не нужно знать программирование.
 
-### 1. Изменить телефон / адрес / часы работы
+### Заменить две фотографии мойки
+
+Положите свои фото в `public/photos/`, перезаписав файлы-заглушки:
+
+- `public/photos/photo-1.svg` → ваше фото (можно `.jpg`, `.png`, `.webp`)
+- `public/photos/photo-2.svg` → ваше фото
+
+Если используете другое расширение (например `.jpg`), отредактируйте 2 строки в
+`src/components/About.astro`:
+
+```ts
+const photo1 = `${base}/photos/photo-1.jpg`;
+const photo2 = `${base}/photos/photo-2.jpg`;
+```
+
+Рекомендуемые размеры: вертикальные, не меньше 900×1200 пикселей, до 500 КБ.
+
+### Изменить телефон / адрес / часы работы
 
 Откройте `src/data/site.ts` — измените значения, сохраните, закоммитьте.
 Изменится **везде на сайте** (шапка, футер, карта, JSON-LD, CTA).
 
-### 2. Добавить фото в галерею
+### Добавить или изменить услугу
 
-1. Положите фото в одну из папок:
-   - `public/gallery/exterior/` — кузов
-   - `public/gallery/interior/` — салон
-   - `public/gallery/polish/` — полировка
-   - `public/gallery/before-after/` — пары «до/после»
-
-2. Создайте файл `src/content/gallery/2026-06-моя-работа.md`:
-
-   ```md
-   ---
-   title: "Audi A6 — комплексная мойка"
-   category: "exterior"      # exterior | interior | polish | detailing
-   date: 2026-06-15
-   car: "Audi A6"
-   image: "/gallery/exterior/audi-a6.jpg"
-   order: 5                  # меньше = выше в галерее
-   ---
-   Короткое описание (опционально).
-   ```
-
-3. `git commit && git push` — GitHub Actions сам пересоберёт сайт.
-
-### 3. Добавить услугу
-
-Создайте `src/content/services/моя-услуга.md`:
+В папке `src/content/services/` — один `.md` файл на услугу. Создайте новый:
 
 ```md
 ---
 title: "Бронепленка"
 category: "detailing"      # complex | exterior | interior | polish | detailing | extra
-icon: "shield-check"       # см. список иконок в src/components/ui/Icon.astro
-priceFrom: 45000
-duration: "от 1 дня"
-order: 55
+icon: "shield-check"       # см. список в src/components/ui/Icon.astro
+order: 55                  # меньше = выше в списке
 featured: false            # true → бейдж «Хит»
 highlights:
   - "Антигравийная защита"
@@ -69,12 +61,12 @@ highlights:
   - "Прозрачная или матовая"
 ---
 
-Текст карточки — что получит клиент.
+Текст карточки — короткое описание, что получит клиент.
 ```
 
-### 4. Добавить отзыв
+### Добавить отзыв
 
-Создайте `src/content/reviews/имя-клиента.md`:
+`src/content/reviews/имя-клиента.md`:
 
 ```md
 ---
@@ -88,32 +80,24 @@ order: 5
 Текст отзыва.
 ```
 
-## Структура проекта
+## Структура страницы
 
-```
-src/
-├── content/
-│   ├── services/    # .md услуги — добавляйте новые сюда
-│   ├── gallery/     # .md примеры работ
-│   └── reviews/     # .md отзывы
-├── data/site.ts     # ★ телефон, адрес, часы, преимущества, процесс
-├── components/      # секции страницы
-├── layouts/Base.astro
-├── pages/index.astro
-└── scripts/animations.ts  # GSAP, lightbox, before/after, фильтры галереи
-public/
-├── gallery/         # сами файлы изображений (jpg/png/svg/webp)
-├── favicon.svg
-└── og-image.svg     # картинка для соцсетей при шеринге
-```
+1. Hero — крупный заголовок, контакт-кнопки
+2. Преимущества — 6 карточек
+3. Услуги — без цен, у каждой кнопка «Уточнить по телефону»
+4. О мойке — текст + две фотографии + счётчики
+5. Отзывы — 4 карточки + ссылка на Яндекс
+6. Карта + адрес + часы работы
+7. Большой CTA с телефоном
+8. Footer
 
 ## Деплой на GitHub Pages
 
-1. В репозитории: **Settings → Pages → Source: GitHub Actions**.
-2. Запушьте в `main` — workflow `.github/workflows/deploy.yml` соберёт и опубликует.
-3. Адрес: `https://<ваш-юзер>.github.io/avtomoyka-kolomenskaya-site/`.
+Workflow `.github/workflows/deploy.yml` собирает сайт и публикует в ветку `gh-pages`.
 
-Если поменяете имя репозитория или подключите свой домен, обновите `site` и `base` в `astro.config.mjs`. Для своего домена создайте `public/CNAME` с одной строкой — доменом.
+1. В репозитории: **Settings → Pages → Source: Deploy from a branch → Branch: `gh-pages` / `(root)`**.
+2. Запушьте в `main` — GitHub Actions соберёт сайт, обновит ветку `gh-pages`, Pages подхватит изменения за минуту.
+3. Адрес: `https://<ваш-юзер>.github.io/avtomoyka-kolomenskaya-site/`.
 
 ## Соответствие требованиям Роскомнадзора
 
@@ -125,10 +109,3 @@ public/
 - Карта Яндекса встроена через iframe — Яндекс сам обрабатывает свои ПДн.
 
 В футере есть короткая заметка об этом для прозрачности перед клиентами.
-
-## Технологии
-
-- [Astro 5](https://astro.build) — статический генератор сайтов
-- [Tailwind CSS](https://tailwindcss.com) — утилитарный CSS
-- [GSAP + ScrollTrigger](https://gsap.com) — анимации
-- Manrope + Unbounded — типографика

@@ -2,8 +2,6 @@
 title: "Химчистка салона"
 category: "interior"
 icon: "armchair"
-priceFrom: 6500
-duration: "от 3 часов"
 order: 30
 featured: true
 highlights:
