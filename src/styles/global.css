@@ -22,6 +22,28 @@
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
+    cursor: default;
+  }
+
+  /* По всему сайту — стрелка, без I-beam над текстом */
+  * {
+    cursor: inherit;
+  }
+
+  /* Кликабельные элементы — указатель */
+  a,
+  button,
+  [role="button"],
+  label[for],
+  summary,
+  select {
+    cursor: pointer;
+  }
+
+  /* Текстовые поля сохраняют I-beam, чтобы можно было редактировать */
+  input:not([type="button"]):not([type="submit"]):not([type="reset"]):not([type="checkbox"]):not([type="radio"]):not([type="range"]),
+  textarea {
+    cursor: text;
   }
 
   ::selection {
