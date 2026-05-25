@@ -9,6 +9,17 @@ if (reduced) {
   document.documentElement.classList.add("reduced-motion");
 }
 
+// Counters: работают всегда, чтобы цифры были видны даже при reduced-motion.
+// При reduced-motion просто выставляем финальное значение без твина.
+const setCounter = (el: HTMLElement) => {
+  const target = Number(el.dataset.counter ?? 0);
+  el.textContent = target.toLocaleString("ru-RU");
+};
+
+if (reduced) {
+  document.querySelectorAll<HTMLElement>("[data-counter]").forEach(setCounter);
+}
+
 if (!reduced) {
   gsap.registerPlugin(ScrollTrigger);
 

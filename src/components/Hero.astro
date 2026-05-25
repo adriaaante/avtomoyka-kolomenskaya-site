@@ -2,6 +2,23 @@
 import { site } from "../data/site";
 import PhoneButton from "./ui/PhoneButton.astro";
 import Icon from "./ui/Icon.astro";
+import { existsSync } from "node:fs";
+import { fileURLToPath } from "node:url";
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, "");
+const publicDir = fileURLToPath(new URL("../../public/", import.meta.url));
+
+function pickPhoto(name: string): string {
+  const exts = ["jpg", "jpeg", "png", "webp", "avif", "svg"];
+  for (const ext of exts) {
+    if (existsSync(`${publicDir}photos/${name}.${ext}`)) {
+      return `${base}/photos/${name}.${ext}`;
+    }
+  }
+  return `${base}/photos/${name}.svg`;
+}
+
+const heroPhoto = pickPhoto("photo-1");
 
 const title = "Машина, в которую хочется садиться";
 const words = title.split(" ");
@@ -76,33 +93,28 @@ const words = title.split(" ");
       </div>
     </div>
 
-    <!-- Visual badge -->
+    <!-- Hero photo -->
     <div class="relative lg:col-span-5">
-      <div class="relative mx-auto aspect-square w-full max-w-md">
-        <!-- ring -->
-        <div class="absolute inset-0 rounded-full border border-brass-500/30"></div>
-        <div class="absolute inset-6 rounded-full border border-brass-500/20"></div>
-        <div class="absolute inset-12 rounded-full border border-brass-500/10"></div>
-        <!-- spinning labels -->
-        <svg viewBox="0 0 400 400" class="absolute inset-0 animate-[spin_24s_linear_infinite]">
-          <defs>
-            <path id="ring-path" d="M200,200 m-170,0 a170,170 0 1,1 340,0 a170,170 0 1,1 -340,0"/>
-          </defs>
-          <text font-family="Manrope, sans-serif" font-size="16" fill="#caa436" letter-spacing="8">
-            <textPath href="#ring-path">
-              · РУЧНАЯ МОЙКА · ХИМЧИСТКА · ПОЛИРОВКА · КЕРАМИКА · ДЕТЕЙЛИНГ
-            </textPath>
-          </text>
-        </svg>
-        <!-- center -->
-        <div class="absolute inset-0 grid place-items-center">
-          <div class="grid h-44 w-44 place-items-center rounded-full bg-gradient-to-br from-brass-400 to-brass-600 text-ink-950 shadow-glow">
-            <div class="text-center">
-              <div class="font-display text-5xl font-extrabold">9–22</div>
-              <div class="mt-1 text-[10px] font-semibold uppercase tracking-[0.3em]">ежедневно</div>
-            </div>
+      <div class="relative mx-auto aspect-[4/5] w-full max-w-md overflow-hidden rounded-3xl border border-ink-700 shadow-card">
+        <img
+          src={heroPhoto}
+          alt="Автомойка на Коломенской"
+          loading="eager"
+          decoding="async"
+          class="absolute inset-0 h-full w-full object-cover"
+        />
+        <div class="pointer-events-none absolute inset-0 bg-gradient-to-t from-ink-950/80 via-ink-950/10 to-transparent"></div>
+        <!-- 9–22 badge over photo -->
+        <div class="absolute bottom-5 right-5 grid h-24 w-24 place-items-center rounded-full bg-brass-400 text-ink-950 shadow-glow">
+          <div class="text-center">
+            <div class="font-display text-2xl font-extrabold leading-none">9–22</div>
+            <div class="mt-1 text-[8px] font-semibold uppercase tracking-[0.25em]">ежедневно</div>
           </div>
         </div>
+        <span class="absolute left-5 top-5 inline-flex items-center gap-2 rounded-full bg-ink-950/70 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-[0.25em] text-brass-200 backdrop-blur">
+          <Icon name="map-pin" class="h-3 w-3" />
+          Нагатинская, 1б
+        </span>
       </div>
     </div>
   </div>
