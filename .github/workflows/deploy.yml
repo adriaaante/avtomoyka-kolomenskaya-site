@@ -28,6 +28,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Fetch photos from Google Drive
+        run: npm run fetch:photos || echo "::warning::fetch:photos failed — using existing/placeholder images"
+
       - name: Build
         run: npm run build
 
