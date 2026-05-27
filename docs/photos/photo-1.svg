@@ -1,0 +1,39 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1200" role="img" aria-label="Фото автомойки Коломенская">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#0b0f15"/>
+      <stop offset="1" stop-color="#1a2230"/>
+    </linearGradient>
+    <radialGradient id="spot" cx="50%" cy="40%" r="60%">
+      <stop offset="0" stop-color="#caa436" stop-opacity="0.25"/>
+      <stop offset="1" stop-color="#caa436" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="body" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#e6ecf5"/>
+      <stop offset="1" stop-color="#6a7585"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="1200" fill="url(#bg)"/>
+  <rect width="1600" height="1200" fill="url(#spot)"/>
+  <rect x="100" y="80" width="1400" height="4" fill="#caa436" opacity="0.6"/>
+  <g fill="#ffffff" opacity="0.08">
+    <circle cx="200" cy="380" r="50"/>
+    <circle cx="320" cy="460" r="70"/>
+    <circle cx="1300" cy="340" r="55"/>
+    <circle cx="1440" cy="420" r="40"/>
+  </g>
+  <g transform="translate(280,540)">
+    <path d="M40 280 Q60 200 180 180 Q260 80 480 70 Q700 60 820 170 Q940 190 980 280 L990 360 L30 360 Z" fill="url(#body)"/>
+    <path d="M210 180 Q280 110 470 100 Q660 95 770 175 L760 220 Q650 160 480 160 Q300 160 220 220 Z" fill="#1a2230"/>
+    <circle cx="200" cy="370" r="78" fill="#0b0f15"/>
+    <circle cx="200" cy="370" r="48" fill="#2a3445"/>
+    <circle cx="800" cy="370" r="78" fill="#0b0f15"/>
+    <circle cx="800" cy="370" r="48" fill="#2a3445"/>
+    <path d="M70 270 Q160 230 320 230 L800 230 Q900 240 950 280" stroke="#fff" stroke-opacity="0.6" stroke-width="4" fill="none"/>
+  </g>
+  <ellipse cx="800" cy="950" rx="700" ry="20" fill="#000" opacity="0.55"/>
+  <g fill="#caa436" opacity="0.55">
+    <text x="60" y="1100" font-family="Manrope, sans-serif" font-size="32" font-weight="700" letter-spacing="0.2em">АВТОМОЙКА КОЛОМЕНСКАЯ</text>
+    <text x="60" y="1144" font-family="Manrope, sans-serif" font-size="22" letter-spacing="0.25em">ЗАМЕНИТЕ ЭТОТ ФАЙЛ СВОИМ ФОТО</text>
+  </g>
+</svg>
