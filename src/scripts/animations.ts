@@ -21,17 +21,72 @@ const setCounter = (el: HTMLElement) => {
 // page never gets stuck showing hidden content over an empty background.
 const revealAll = () => {
   document
-    .querySelectorAll<HTMLElement>(".fade-in")
+    .querySelectorAll<HTMLElement>(".fade-in, [data-stagger-item]")
     .forEach((el) => el.classList.add("visible"));
-  document.querySelectorAll<HTMLElement>("[data-stagger-item]").forEach((el) => {
-    el.style.opacity = "";
-    el.style.transform = "";
-  });
   document.querySelectorAll<HTMLElement>("[data-counter]").forEach(setCounter);
+};
+
+// Reveal-on-scroll for headings and card grids. Pure IntersectionObserver +
+// CSS transitions — deliberately NOT GSAP ScrollTrigger, whose cached scroll
+// positions can go stale after async web fonts/layout shifts and leave whole
+// sections stuck at opacity:0 (data present in the DOM but invisible).
+const setupReveals = () => {
+  const io = new IntersectionObserver(
+    (entries, obs) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        const el = entry.target as HTMLElement;
+        if (el.hasAttribute("data-stagger")) {
+          el
+            .querySelectorAll<HTMLElement>("[data-stagger-item]")
+            .forEach((item, i) => {
+              item.style.transitionDelay = `${Math.min(i * 80, 480)}ms`;
+              item.classList.add("visible");
+            });
+        } else {
+          el.classList.add("visible");
+        }
+        obs.unobserve(el);
+      }
+    },
+    { rootMargin: "0px 0px -10% 0px", threshold: 0.05 },
+  );
+  document
+    .querySelectorAll<HTMLElement>(".fade-in, [data-stagger]")
+    .forEach((el) => io.observe(el));
+};
+
+// Counters count up when scrolled into view (IntersectionObserver-driven).
+const setupCounters = () => {
+  const io = new IntersectionObserver(
+    (entries, obs) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        const el = entry.target as HTMLElement;
+        const target = Number(el.dataset.counter ?? 0);
+        const obj = { v: 0 };
+        gsap.to(obj, {
+          v: target,
+          duration: 1.8,
+          ease: "expo.out",
+          onUpdate: () => {
+            el.textContent = Math.round(obj.v).toLocaleString("ru-RU");
+          },
+        });
+        obs.unobserve(el);
+      }
+    },
+    { threshold: 0.3 },
+  );
+  document
+    .querySelectorAll<HTMLElement>("[data-counter]")
+    .forEach((el) => io.observe(el));
 };
 
 if (reduced) {
   revealAll();
+} else {
+  setupReveals();
 }
 
 // Signal to the inline fallback that the module loaded and is handling reveals.
@@ -40,138 +95,60 @@ document.documentElement.classList.add("anim-ready");
 if (!reduced) {
   try {
     gsap.registerPlugin(ScrollTrigger);
+    setupCounters();
 
-  // Fade-in elements
-  const ioFade = new IntersectionObserver(
-    (entries) => {
-      for (const entry of entries) {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
-          ioFade.unobserve(entry.target);
-        }
-      }
-    },
-    { rootMargin: "0px 0px -10% 0px", threshold: 0.05 },
-  );
-  document.querySelectorAll<HTMLElement>(".fade-in").forEach((el) => {
-    ioFade.observe(el);
-  });
-
-  // Hero subtle parallax
-  const heroBg = document.querySelector<HTMLElement>("[data-hero-bg]");
-  if (heroBg) {
-    gsap.to(heroBg, {
-      yPercent: 18,
-      ease: "none",
-      scrollTrigger: {
-        trigger: heroBg,
-        start: "top top",
-        end: "bottom top",
-        scrub: true,
-      },
-    });
-  }
-
-  // Hero text reveal
-  gsap.from("[data-hero-title] > span", {
-    yPercent: 110,
-    opacity: 0,
-    duration: 1.1,
-    ease: "expo.out",
-    stagger: 0.08,
-    delay: 0.15,
-  });
-  gsap.from("[data-hero-sub]", {
-    y: 24,
-    opacity: 0,
-    duration: 0.9,
-    ease: "expo.out",
-    delay: 0.5,
-  });
-  gsap.from("[data-hero-cta]", {
-    y: 16,
-    opacity: 0,
-    duration: 0.8,
-    ease: "expo.out",
-    stagger: 0.1,
-    delay: 0.7,
-  });
-
-  // Cards stagger
-  document
-    .querySelectorAll<HTMLElement>("[data-stagger]")
-    .forEach((container) => {
-      const items = container.querySelectorAll<HTMLElement>("[data-stagger-item]");
-      if (!items.length) return;
-      gsap.from(items, {
-        opacity: 0,
-        y: 36,
-        duration: 0.8,
-        ease: "expo.out",
-        stagger: 0.08,
-        scrollTrigger: {
-          trigger: container,
-          start: "top 80%",
-        },
-      });
-    });
-
-  // Counters
-  document
-    .querySelectorAll<HTMLElement>("[data-counter]")
-    .forEach((el) => {
-      const target = Number(el.dataset.counter ?? 0);
-      const obj = { v: 0 };
-      ScrollTrigger.create({
-        trigger: el,
-        start: "top 85%",
-        once: true,
-        onEnter: () => {
-          gsap.to(obj, {
-            v: target,
-            duration: 1.8,
-            ease: "expo.out",
-            onUpdate: () => {
-              el.textContent = Math.round(obj.v).toLocaleString("ru-RU");
-            },
-          });
-        },
-      });
-    });
-
-  // Process horizontal scroll on desktop
-  const proc = document.querySelector<HTMLElement>("[data-process-track]");
-  if (proc && window.matchMedia("(min-width: 1024px)").matches) {
-    const inner = proc.querySelector<HTMLElement>("[data-process-inner]");
-    if (inner) {
-      const distance = () => inner.scrollWidth - proc.clientWidth;
-      gsap.to(inner, {
-        x: () => -distance(),
+    // Hero subtle parallax
+    const heroBg = document.querySelector<HTMLElement>("[data-hero-bg]");
+    if (heroBg) {
+      gsap.to(heroBg, {
+        yPercent: 18,
         ease: "none",
         scrollTrigger: {
-          trigger: proc,
+          trigger: heroBg,
           start: "top top",
-          end: () => `+=${distance()}`,
-          pin: true,
-          scrub: 0.6,
-          invalidateOnRefresh: true,
+          end: "bottom top",
+          scrub: true,
         },
       });
     }
-  }
 
-  // Header solid on scroll
-  const header = document.querySelector<HTMLElement>("[data-header]");
-  if (header) {
-    ScrollTrigger.create({
-      start: 40,
-      end: 99999,
-      onUpdate: (self) => {
-        if (self.scroll() > 40) header.classList.add("is-scrolled");
-        else header.classList.remove("is-scrolled");
-      },
+    // Hero text reveal
+    gsap.from("[data-hero-title] > span", {
+      yPercent: 110,
+      opacity: 0,
+      duration: 1.1,
+      ease: "expo.out",
+      stagger: 0.08,
+      delay: 0.15,
     });
-  }
+    gsap.from("[data-hero-sub]", {
+      y: 24,
+      opacity: 0,
+      duration: 0.9,
+      ease: "expo.out",
+      delay: 0.5,
+    });
+    gsap.from("[data-hero-cta]", {
+      y: 16,
+      opacity: 0,
+      duration: 0.8,
+      ease: "expo.out",
+      stagger: 0.1,
+      delay: 0.7,
+    });
+
+    // Header solid on scroll
+    const header = document.querySelector<HTMLElement>("[data-header]");
+    if (header) {
+      ScrollTrigger.create({
+        start: 40,
+        end: 99999,
+        onUpdate: (self) => {
+          if (self.scroll() > 40) header.classList.add("is-scrolled");
+          else header.classList.remove("is-scrolled");
+        },
+      });
+    }
   } catch {
     // If GSAP/ScrollTrigger fails for any reason, never leave the page blank.
     revealAll();

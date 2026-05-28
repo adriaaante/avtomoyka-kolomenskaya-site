@@ -124,7 +124,8 @@
 @layer utilities {
   /* Hidden only when JS is confirmed running, so content stays visible
      if the script is blocked, slow, or errors out. */
-  .js .fade-in {
+  .js .fade-in,
+  .js [data-stagger-item] {
     opacity: 0;
     transform: translateY(28px);
     transition:
@@ -133,7 +134,9 @@
   }
 
   .fade-in.visible,
-  .reduced-motion .fade-in {
+  [data-stagger-item].visible,
+  .reduced-motion .fade-in,
+  .reduced-motion [data-stagger-item] {
     opacity: 1;
     transform: none;
   }

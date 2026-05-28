@@ -74,9 +74,11 @@ const jsonLd = {
       addEventListener("load", function () {
         setTimeout(function () {
           if (document.documentElement.classList.contains("anim-ready")) return;
-          document.querySelectorAll(".fade-in").forEach(function (el) {
-            el.classList.add("visible");
-          });
+          document
+            .querySelectorAll(".fade-in, [data-stagger-item]")
+            .forEach(function (el) {
+              el.classList.add("visible");
+            });
           document.querySelectorAll("[data-counter]").forEach(function (el) {
             el.textContent = Number(el.dataset.counter || 0).toLocaleString("ru-RU");
           });
