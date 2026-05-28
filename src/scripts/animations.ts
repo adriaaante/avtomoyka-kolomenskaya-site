@@ -16,12 +16,30 @@ const setCounter = (el: HTMLElement) => {
   el.textContent = target.toLocaleString("ru-RU");
 };
 
-if (reduced) {
+// Safety net: reveal every animated element and finalize counters. Used both
+// when motion is reduced and if anything in the animation setup throws, so the
+// page never gets stuck showing hidden content over an empty background.
+const revealAll = () => {
+  document
+    .querySelectorAll<HTMLElement>(".fade-in")
+    .forEach((el) => el.classList.add("visible"));
+  document.querySelectorAll<HTMLElement>("[data-stagger-item]").forEach((el) => {
+    el.style.opacity = "";
+    el.style.transform = "";
+  });
   document.querySelectorAll<HTMLElement>("[data-counter]").forEach(setCounter);
+};
+
+if (reduced) {
+  revealAll();
 }
 
+// Signal to the inline fallback that the module loaded and is handling reveals.
+document.documentElement.classList.add("anim-ready");
+
 if (!reduced) {
-  gsap.registerPlugin(ScrollTrigger);
+  try {
+    gsap.registerPlugin(ScrollTrigger);
 
   // Fade-in elements
   const ioFade = new IntersectionObserver(
@@ -153,6 +171,10 @@ if (!reduced) {
         else header.classList.remove("is-scrolled");
       },
     });
+  }
+  } catch {
+    // If GSAP/ScrollTrigger fails for any reason, never leave the page blank.
+    revealAll();
   }
 }
 

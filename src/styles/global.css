@@ -122,7 +122,9 @@
 }
 
 @layer utilities {
-  .fade-in {
+  /* Hidden only when JS is confirmed running, so content stays visible
+     if the script is blocked, slow, or errors out. */
+  .js .fade-in {
     opacity: 0;
     transform: translateY(28px);
     transition:

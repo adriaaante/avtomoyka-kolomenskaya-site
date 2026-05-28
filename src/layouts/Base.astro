@@ -66,6 +66,23 @@ const jsonLd = {
 <!doctype html>
 <html lang="ru">
   <head>
+    <script is:inline>
+      // Enable JS-only hidden states, but guarantee the page never stays blank:
+      // if the animation module hasn't initialised shortly after load (blocked,
+      // failed, or slow), force every fade-in section visible.
+      document.documentElement.classList.add("js");
+      addEventListener("load", function () {
+        setTimeout(function () {
+          if (document.documentElement.classList.contains("anim-ready")) return;
+          document.querySelectorAll(".fade-in").forEach(function (el) {
+            el.classList.add("visible");
+          });
+          document.querySelectorAll("[data-counter]").forEach(function (el) {
+            el.textContent = Number(el.dataset.counter || 0).toLocaleString("ru-RU");
+          });
+        }, 1500);
+      });
+    </script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
     <meta name="generator" content={Astro.generator} />
