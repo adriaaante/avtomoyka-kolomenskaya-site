@@ -61,8 +61,46 @@ const year = new Date().getFullYear();
 
     <hr class="my-10 border-white/5" />
 
-    <div class="flex flex-col items-start justify-between gap-4 text-xs text-white/40 md:flex-row md:items-center">
-      <div>© {year} {site.shortName}. Все права защищены.</div>
+    <div class="space-y-5 text-xs text-white/40">
+      <div class="flex flex-col items-start justify-between gap-4 sm:flex-row sm:items-center">
+        <div>© {year} {site.shortName}. Все права защищены.</div>
+        <a
+          href="https://futureflow.ru"
+          target="_blank"
+          rel="noopener"
+          aria-label="Сайт разработан студией FutureFlow"
+          class="inline-flex flex-shrink-0 items-center gap-2 rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-white/70 transition-colors hover:border-brass-400/40 hover:bg-white/10 hover:text-white"
+        >
+          <svg
+            class="h-5 w-5 flex-shrink-0 [filter:drop-shadow(0_0_6px_rgba(202,164,54,.45))]"
+            width="20"
+            height="20"
+            viewBox="0 0 32 32"
+            aria-hidden="true"
+            fill="none"
+            stroke="url(#ffGrad)"
+            stroke-width="2"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+          >
+            <defs>
+              <linearGradient id="ffGrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="#e8d28a" />
+                <stop offset="0.5" stop-color="#fbf6ea" />
+                <stop offset="1" stop-color="#caa436" />
+              </linearGradient>
+            </defs>
+            <rect x="8" y="8" width="16" height="16" rx="2.5" />
+            <path
+              d="M12 8V4M16 8V4M20 8V4 M12 28V24M16 28V24M20 28V24 M8 12H4M8 16H4M8 20H4 M28 12H24M28 16H24M28 20H24"
+            />
+          </svg>
+          <span>Сделано в&nbsp;<span
+              class="bg-gradient-to-r from-brass-200 via-brass-50 to-brass-400 bg-clip-text font-bold text-transparent"
+              >FutureFlow</span
+            ></span>
+        </a>
+      </div>
       <div class="max-w-xl text-white/40">
         Сайт носит информационный характер и не собирает персональные данные пользователей. Цены не являются публичной офертой.
       </div>
